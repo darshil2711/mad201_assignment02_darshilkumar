@@ -38,10 +38,6 @@ It demonstrates:
 ---
 
 ## 🧱 Project Structure
-<<<<<<< HEAD
-
-=======
->>>>>>> 1718fd50b1a814d7871c81dd9f8b9499aede6824
 mad201_assignment02_darshilkumar/
 
 ├─ lib/
