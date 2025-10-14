@@ -38,7 +38,8 @@ It demonstrates:
 ---
 
 ## 🧱 Project Structure
-expense-tracker/
+mad201_assignment02_darshilkumar/
+
 ├─ lib/
 
 │ ├─ main.dart
