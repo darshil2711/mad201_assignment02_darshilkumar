@@ -38,19 +38,33 @@ It demonstrates:
 ---
 
 ## 🧱 Project Structure
-expense-tracker/
+
+mad201_assignment02_darshilkumar/
+
 ├─ lib/
+
 │ ├─ main.dart
+
 │ ├─ models/
+
 │ │ └─ expense.dart
+
 │ ├─ screens/
+
 │ │ ├─ home_screen.dart
+
 │ │ ├─ add_expense_screen.dart
+
 │ │ └─ expense_detail_screen.dart
+
 │ └─ widgets/
+
 │ └─ expense_card.dart
+
 ├─ pubspec.yaml
+
 ├─ .gitignore
+
 └─ README.md
 
 
@@ -63,6 +77,8 @@ AddExpenseScreen
 Return data → HomeScreen updates
    ↓
 ExpenseDetailScreen (via tapping a list item)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
