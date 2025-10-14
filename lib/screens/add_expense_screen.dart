@@ -3,8 +3,8 @@
 /// Screen to add a new expense.
 
 import 'package:flutter/material.dart';
-import '../models/expense.dart';
 import 'package:intl/intl.dart';
+import '../models/expense.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({super.key});
@@ -36,27 +36,29 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       firstDate: DateTime(now.year - 5),
       lastDate: DateTime(now.year + 5),
     );
+
     if (picked != null) {
-      setState(() {
-        _selectedDate = picked;
-      });
+      setState(() => _selectedDate = picked);
     }
   }
 
-  void _save() {
+  void _saveExpense() {
     if (!_formKey.currentState!.validate()) return;
+
     if (_selectedDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please choose a date')),
       );
       return;
     }
+
     final expense = Expense(
       title: _titleController.text.trim(),
       amount: double.parse(_amountController.text.trim()),
       description: _descController.text.trim(),
       date: _selectedDate!,
     );
+
     Navigator.pop(context, expense);
   }
 
@@ -65,53 +67,70 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     final dateText = _selectedDate == null
         ? 'No date chosen'
         : DateFormat.yMMMd().format(_selectedDate!);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Add Expense')),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
                 controller: _titleController,
                 decoration: const InputDecoration(labelText: 'Title'),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? 'Enter title' : null,
+                validator: (value) =>
+                    (value == null || value.trim().isEmpty) ? 'Enter title' : null,
               ),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: _amountController,
                 decoration: const InputDecoration(labelText: 'Amount'),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                validator: (v) {
-                  if (v == null || v.trim().isEmpty) return 'Enter amount';
-                  final value = double.tryParse(v);
-                  if (value == null || value <= 0) return 'Enter valid amount';
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Enter amount';
+                  }
+                  final amount = double.tryParse(value);
+                  if (amount == null || amount <= 0) {
+                    return 'Enter a valid amount';
+                  }
                   return null;
                 },
               ),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: _descController,
                 decoration: const InputDecoration(labelText: 'Description'),
-                minLines: 1,
-                maxLines: 3,
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? 'Enter description' : null,
+                minLines: 2,
+                maxLines: 4,
+                validator: (value) =>
+                    (value == null || value.trim().isEmpty) ? 'Enter description' : null,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
               Row(
                 children: [
-                  Text(dateText),
-                  const Spacer(),
+                  Expanded(
+                    child: Text(
+                      dateText,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
                   TextButton(
                     onPressed: _pickDate,
                     child: const Text('Choose Date'),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              ElevatedButton(onPressed: _save, child: const Text('Save')),
+              const SizedBox(height: 24),
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: _saveExpense,
+                  icon: const Icon(Icons.save),
+                  label: const Text('Save Expense'),
+                ),
+              ),
             ],
           ),
         ),

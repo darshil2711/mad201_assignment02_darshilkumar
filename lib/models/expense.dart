@@ -15,3 +15,4 @@ class Expense {
     required this.date,
   });
 }
+
